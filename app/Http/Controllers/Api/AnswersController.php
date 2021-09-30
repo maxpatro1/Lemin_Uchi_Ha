@@ -21,7 +21,7 @@ class AnswersController extends ApiController
     protected $model;
 
 
-    public function __construct(Request $request, Question $model)
+    public function __construct(Request $request, Answer $model)
     {
         $this->request = $request;
         $this->model = $model;
@@ -41,13 +41,13 @@ class AnswersController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param Question $question
+     * @param Answer $answer
      * @return JsonResponse
      */
-    public function store(Question $question): JsonResponse
+    public function store(Answer $answer): JsonResponse
     {
-        $question->save();
-        return $this->respond($question);
+        $answer->save();
+        return $this->respond($answer);
     }
 
     /**
@@ -58,43 +58,43 @@ class AnswersController extends ApiController
      */
     public function show(int $id): JsonResponse
     {
-        $question = QuestionPack::query()->find($id);
-        if (!$question) {
+        $answer = Answer::query()->find($id);
+        if (!$answer) {
             return $this->respondNotFound();
         }
-        return $this->respond($question);
+        return $this->respond($answer);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Question $question
+     * @param Answer $answer
      * @return JsonResponse
      */
-    public function update(Question $question): JsonResponse
+    public function update(Answer $answer): JsonResponse
     {
-        $question->save();
-        return $this->respond($question);
+        $answer->save();
+        return $this->respond($answer);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Question $question
+     * @param Answer $answer
      * @return JsonResponse
      */
-    public function destroy(Question $question): JsonResponse
+    public function destroy(Answer $answer): JsonResponse
     {
-        $question->delete();
-        return $this->respond($question);
+        $answer->delete();
+        return $this->respond($answer);
     }
 
-    public function getQuestionsByQuestionPackId(int $question_pack_id): JsonResponse
+    public function getAnswersByQuestionId(int $question_id): JsonResponse
     {
-        $questions = Question::query()->where($question_pack_id)->get();
-        if (!$questions) {
+        $answers = Answer::query()->where($question_id)->get();
+        if (!$answers) {
             $this->respondNotFound();
         }
-        return $this->respond($questions);
+        return $this->respond($answers);
     }
 }

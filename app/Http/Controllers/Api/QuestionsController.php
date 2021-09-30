@@ -61,7 +61,7 @@ class QuestionsController extends ApiController
      */
     public function show(int $id): JsonResponse
     {
-        $question = QuestionPack::query()->find($id);
+        $question = Question::query()->find($id);
         if (!$question) {
             return $this->respondNotFound();
         }
