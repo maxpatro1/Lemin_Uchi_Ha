@@ -13,12 +13,7 @@ class QuestionPack extends Model
 
     protected $fillable = [
         'name',
-        'created_by',
     ];
 
-    public function createByUser(): BelongsTo
-    {
-        return $this->belongsTo(User::class,'created_by','id');
-    }
 
 }

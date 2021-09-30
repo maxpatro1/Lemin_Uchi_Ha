@@ -1,12 +1,12 @@
 <template>
-    <h1>
-        Hello world
-    </h1>
+    <QuestionPack/>
 </template>
 
 <script>
+import QuestionPack from "./components/manager/QuestionPack";
 export default {
-    name: "App"
+    name: "App",
+    components: {QuestionPack}
 }
 </script>
 

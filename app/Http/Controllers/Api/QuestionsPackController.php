@@ -29,12 +29,12 @@ class QuestionsPackController extends ApiController
     /**
      * Display a listing of the resource.
      *
-     * @return Collection|QuestionPack[]
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         //TODO VALIDATION
-        return $this->model->all();
+        return $this->respond(QuestionPack::query()->get());
     }
 
     /**
