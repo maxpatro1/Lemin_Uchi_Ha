@@ -19,7 +19,7 @@ class CreateQuestionsTable extends Migration
             $table->integer('question_pack_id');
             $table->integer('question_level_id');
             $table->integer('question_type_id');
-            $table->foreign('question_pack_id')->references('id')->on('question_pack');
+            $table->foreign('question_pack_id')->references('id')->on('question_packs');
             $table->foreign('question_level_id')->references('id')->on('dict_question_levels');
             $table->foreign('question_type_id')->references('id')->on('dict_question_types');
             $table->timestamps();

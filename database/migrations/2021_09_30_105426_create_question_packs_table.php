@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuestionPackTable extends Migration
+class CreateQuestionPacksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateQuestionPackTable extends Migration
      */
     public function up()
     {
-        Schema::create('question_pack', function (Blueprint $table) {
+        Schema::create('question_packs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->foreignId('created_by')->nullable()->references('id')->on('users');
