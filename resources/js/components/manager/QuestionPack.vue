@@ -9,14 +9,22 @@
         </b-button>
         <b-list-group>
             <b-list-group-item v-for="questionPack in questionPacks">
-                <router-link>
+                <div>
                     <span>{{questionPack.name}}</span>
-                </router-link>
+                </div>
+                <b-button
+                    variant="outline-primary"
+                    @click="openUpdatingPackModal(questionPack)"
+                >Update</b-button>
+                <b-button
+                    variant="danger"
+                    @click="deleteQuestionPack(questionPack)"
+                >Delete</b-button>
             </b-list-group-item>
         </b-list-group>
         <b-modal
             hide-footer
-            id="question-pack-modal"
+            id="new-question-pack-modal"
             title="Введите название для пакета вопросов"
         >
             <b-form-input v-model="newQuestionPack.name"></b-form-input>
@@ -25,6 +33,19 @@
                 @click="createQuestionPack"
             >
                 Создать
+            </b-button>
+        </b-modal>
+        <b-modal
+            hide-footer
+            id="current-question-pack-modal"
+            title="Название для пакета вопросов"
+        >
+            <b-form-input v-model="currentQuestionPack.name"></b-form-input>
+            <b-button
+                class="mt-3" variant="outline-primary"
+                @click="updateQuestionPack"
+            >
+                Обновить
             </b-button>
         </b-modal>
     </div>
@@ -42,6 +63,10 @@ export default {
             newQuestionPack: {
                 name: null,
                 created_by: 3,
+            },
+            currentQuestionPack: {
+                name: null,
+                created_by: 3,
             }
         }
     },
@@ -55,7 +80,11 @@ export default {
             this.isLoading = false
         },
         openCreationPackModal() {
-            this.$bvModal.show('question-pack-modal')
+            this.$bvModal.show('new-question-pack-modal')
+        },
+        openUpdatingPackModal(questionPack) {
+            this.currentQuestionPack.name = questionPack.name
+            this.$bvModal.show('current-question-pack-modal')
         },
         async createQuestionPack() {
             await QuestionPackResource.save(this.newQuestionPack)
@@ -63,9 +92,23 @@ export default {
                 name: null,
                 created_by: 3,
             }
-            this.$bvModal.hide('question-pack-modal')
+            this.$bvModal.hide('new-question-pack-modal')
             await this.fetchData()
-        }
+        },
+        async updateQuestionPack() {
+            await QuestionPackResource.save(this.currentQuestionPack)
+            this.newQuestionPack = {
+                name: null,
+                created_by: 3,
+            }
+            this.$bvModal.hide('current-question-pack-modal')
+            await this.fetchData()
+        },
+        async deleteQuestionPack(questionPack) {
+            await QuestionPackResource.delete(questionPack)
+            console.log("Pack has been deleted")
+            await this.fetchData()
+        },
     }
 }
 </script>
