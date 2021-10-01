@@ -1,12 +1,9 @@
 import axios from "axios";
+import Resource from "./resource";
 
-class QuestionPackResource {
+class QuestionPackResource extends Resource {
     static async fetchQuestionPacks() {
         const { data } = await axios.get(this.url)
-        return data
-    }
-    static async saveQuestionPacks(params) {
-        const { data } = await axios.post(this.url, params)
         return data
     }
 }

@@ -34,18 +34,24 @@ class QuestionsPackController extends ApiController
     public function index(): JsonResponse
     {
         //TODO VALIDATION
-        return $this->respond(QuestionPack::query()->get());
+        return $this->respond($this->model::query()->get());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  QuestionPack  $questionPack
+     * @param Request $request
      * @return JsonResponse
      */
-    public function store(QuestionPack $questionPack): JsonResponse
+    public function store(Request $request): JsonResponse
     {
-        $questionPack->save();
+        if (!$request->name || !$request->created_by) {
+            return $this->respondNotFound();
+        }
+        $questionPack = QuestionPack::query()->create([
+            'name' => $request->name,
+            'created_by' => $request->created_by
+        ]);
         return $this->respond($questionPack);
     }
 

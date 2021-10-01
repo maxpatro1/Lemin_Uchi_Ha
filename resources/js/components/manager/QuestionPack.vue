@@ -7,18 +7,26 @@
         >
             Создать пак вопросов
         </b-button>
-        <b-modal id="question-pack-modal">
-            <b-form-group label="Введите название для пакета вопросов">
-                <b-form-input v-model="newQuestionPack.name"></b-form-input>
-            </b-form-group>
+        <b-list-group>
+            <b-list-group-item v-for="questionPack in questionPacks">
+                <router-link>
+                    <span>{{questionPack.name}}</span>
+                </router-link>
+            </b-list-group-item>
+        </b-list-group>
+        <b-modal
+            hide-footer
+            id="question-pack-modal"
+            title="Введите название для пакета вопросов"
+        >
+            <b-form-input v-model="newQuestionPack.name"></b-form-input>
             <b-button
-                variant="outline-primary"
+                class="mt-3" variant="outline-primary"
                 @click="createQuestionPack"
             >
                 Создать
             </b-button>
         </b-modal>
-        <div>{{questionPacks}}</div>
     </div>
 </template>
 
@@ -50,7 +58,13 @@ export default {
             this.$bvModal.show('question-pack-modal')
         },
         async createQuestionPack() {
-            await QuestionPackResource.saveQuestionPacks(this.newQuestionPack)
+            await QuestionPackResource.save(this.newQuestionPack)
+            this.newQuestionPack = {
+                name: null,
+                created_by: 3,
+            }
+            this.$bvModal.hide('question-pack-modal')
+            await this.fetchData()
         }
     }
 }
