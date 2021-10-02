@@ -47,22 +47,26 @@ class BattleFieldsController extends ApiController
     {
 
         $i = 1;
-        while ($i < 14)
+        while ($i <= 14)
         {
             $whos_field_id = null;
-            if ($i = 1) {
+            if ($i === 1) {
                 $whos_field_id = $request->team_1;
-            } else if ($i = 1) {
+            } else if ($i === 13) {
                 $whos_field_id = $request->team_2;
             }
-            $battleField = BattleField::query()->create([
+            BattleField::query()->create([
                 'field_id' => $i,
                 'battle_id' => $request->battle_id,
                 'whos_field_id' => $whos_field_id
             ]);
-            $i++;
+            $i = $i + 1;
+            if ($i === 14){
+                break;
+            }
         }
-
+        $battleField = BattleField::query()
+            ->where('battle_id',$request->battle_id)->get();
         return $this->respond($battleField);
 
     }
@@ -108,6 +112,12 @@ class BattleFieldsController extends ApiController
     public function destroy(BattleField $battleField): JsonResponse
     {
         $battleField->delete();
+        return $this->respond($battleField);
+    }
+
+    public function getBattleFieldsByBattleId(int $id): JsonResponse
+    {
+        $battleField = BattleField::query()->where('battle_id',$id)->get();
         return $this->respond($battleField);
     }
 

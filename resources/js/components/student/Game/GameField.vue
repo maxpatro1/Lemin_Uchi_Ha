@@ -1,26 +1,32 @@
 <template>
     <div>
-        <b-card v-for="field in fieldsData">
+        <b-card @click="openQuestionModal()" v-for="field in battleFields">
             {{field.id}}
         </b-card>
     </div>
 </template>
 
 <script>
-import GameFieldResource from "../../../resources/game_field_resource";
 
 export default {
     name: "GameField",
+    props: {
+        battleFields: {
+            type: Object
+        }
+    },
     data() {
       return {
           fieldsData: null
       }
     },
     mounted() {
-        this.fetchData()
+        console.log(this.battleFields)
     },
     methods: {
+        openQuestionModal() {
 
+        }
     }
 }
 </script>

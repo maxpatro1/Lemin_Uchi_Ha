@@ -17,14 +17,20 @@ class Battle extends Model
         'name',
         'pack_id',
         'team_id',
+        'second_team_id',
+        'is_playing'
     ];
 
     public function pack(): BelongsTo
     {
         return $this->belongsTo(QuestionPack::class,'pack_id','id');
     }
-    public function teams(): HasMany
+    public function team(): BelongsTo
     {
-        return $this->HasMany(Teams::class,'team_id','id');
+        return $this->belongsTo(Teams::class,'team_id','id');
+    }
+    public function second_team(): BelongsTo
+    {
+        return $this->belongsTo(Teams::class,'second_team_id','id');
     }
 }

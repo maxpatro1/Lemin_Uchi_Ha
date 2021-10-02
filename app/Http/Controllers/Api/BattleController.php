@@ -43,9 +43,10 @@ class BattleController extends ApiController
      */
     public function store(Request $request): JsonResponse
     {
-        $battle = Battle::query()->create([
+        $battle = Battle::query()->with(['team','second_team'])->create([
             'team_id' => $request->team_id,
             'pack_id' => $request->pack_id,
+            'second_team_id' => $request->second_team_id
         ]);
         return $this->respond($battle);
     }
@@ -58,7 +59,7 @@ class BattleController extends ApiController
      */
     public function show(int $id): JsonResponse
     {
-        $battle = Battle::query()->find($id);
+        $battle = Battle::query()->with(['team','second_team'])->find($id);
         if (!$battle) {
             return $this->respondNotFound();
         }
