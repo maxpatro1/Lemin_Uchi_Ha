@@ -1,14 +1,37 @@
 <template>
-    <div v-if="!editingAnswer">
-        {{answer.name}}
-        <b-button @click="openEditAnswerInput">Edit</b-button>
-        <b-button @click="deleteAnswer">Delete</b-button>
-    </div>
-    <div v-else>
-        <b-form-input v-model="answer.name"></b-form-input>
-        <b-button @click="editAnswer">Ok</b-button>
-        <b-button @click="closeEditAnswerInput">Cancel</b-button>
-    </div>
+    <b-row v-if="!editingAnswer">
+        <b-col>
+            <span
+                class="answer-text"
+                @click="openEditAnswerInput"
+            >
+                {{answer.name}}
+            </span>
+        </b-col>
+        <b-col calss="col-1">
+            <b-button
+                class="delete-button"
+                @click="deleteAnswer"
+            >
+                <b-icon icon="trash-fill"></b-icon>
+            </b-button>
+        </b-col>
+    </b-row>
+    <b-row v-else>
+        <b-col>
+            <b-form-input class="answer-text" v-model="answer.name"></b-form-input>
+        </b-col>
+        <b-col>
+            <b-button
+                class="button-primary"
+                @click="editAnswer"
+            >Ok</b-button>
+            <b-button
+                class="delete-button"
+                @click="closeEditAnswerInput"
+            >Cancel</b-button>
+        </b-col>
+    </b-row>
 </template>
 
 <script>
@@ -56,5 +79,30 @@ export default {
 </script>
 
 <style scoped>
-
+    .button-primary {
+        margin: 5% 0;
+        color: #FFFFFF !important;
+        background-color: #8B8DFE !important;
+        border-color: #8B8DFE !important;
+        border-radius: 6px;
+    }
+.   button-primary:hover {
+        background-color:  #FFFFFF !important;
+        border-color:  #FFFFFF !important;
+        color: #8B8DFE !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    }
+    .delete-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        border-radius: 9px;
+        background: #FD4A4A !important;
+    }
+    .answer-text {
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 17px;
+    }
 </style>

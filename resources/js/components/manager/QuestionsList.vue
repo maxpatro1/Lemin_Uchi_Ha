@@ -1,10 +1,10 @@
 <template>
     <b-container v-if="questionPack">
-        <page-title>Редактирование раздела</page-title>
+        <h1 class="page-title">Редактирование раздела</h1>
         <b-card class="card-shadow col-md-10 ml-auto mr-auto">
             <b-spinner label="Spinning" v-if="isLoading"></b-spinner>
             <b-row>
-                <b-col sm="auto" class="align-items-center">
+                <b-col>
                     <h3 class="section-title">
                         {{questionPack.name}}
                         <span v-if="questionPack.class">{{questionPack.class.dv}}</span>
@@ -23,7 +23,7 @@
                 </b-col>
             </b-row>
             <b-list-group>
-                <div class="questions-accordion-item" v-for="(question,index) in questions">
+                <div class="questions-accordion-item questions" v-for="(question,index) in questions">
                     <b-list-group-item
                         v-b-toggle="'accordion-questions-' + index"
                         >
@@ -48,6 +48,31 @@
             title="Введите вопрос"
         >
             <b-form-input v-model="newQuestionList.name"></b-form-input>
+            <b-row class="question-options-text">
+                <b-col>
+                    <b-row class="question-options">Время на ответ (сек)</b-row>
+                    <b-row class="question-options">
+                        <b-form-input v-model="newQuestionList.time"></b-form-input>
+                    </b-row>
+                </b-col>
+                <b-col>
+                    <b-row class="question-options">Вес вопроса</b-row>
+                    <b-row class="question-options">
+                        <b-form-checkbox
+                            button
+                            class="button-primary-edit"
+                        >10</b-form-checkbox>
+                        <b-form-checkbox
+                            button
+                            class="button-primary-edit"
+                        >20</b-form-checkbox>
+                        <b-form-checkbox
+                            button
+                            class="button-primary-edit"
+                        >30</b-form-checkbox>
+                    </b-row>
+                </b-col>
+            </b-row>
             <b-button
                 class="mt-3" variant="outline-primary"
                 @click="createQuestion"
@@ -76,7 +101,8 @@ export default {
                 name: null,
                 question_pack_id: null,
                 question_level_id: 1,
-                question_type_id: 1
+                question_type_id: 1,
+                time: 10
             },
             questionPack: null,
         }
@@ -114,13 +140,15 @@ export default {
             this.$bvModal.show('question')
         },
         async createQuestion() {
+            if (this.newQuestionList.time !== Number) return
             this.newQuestionList.question_pack_id = this.getPackId
             await QuestionResource.save(this.newQuestionList)
             this.newQuestionList = {
                 name: null,
                 question_pack_id: null,
                 question_level_id: 1,
-                question_type_id: 1
+                question_type_id: 1,
+                time: 10
             }
             this.$bvModal.hide('question')
             await this.fetchData()
@@ -140,6 +168,13 @@ export default {
 </script>
 
 <style scoped>
+    .page-title {
+        font-weight: 600;
+        font-size: 30px;
+        line-height: 36px;
+        text-align: center;
+        margin: 5% 0;
+    }
     .card-shadow {
         background: #FFFFFF;
         box-shadow: 0 2px 15px rgba(0, 0, 0, 0.25);
@@ -148,10 +183,59 @@ export default {
     .section-title {
         font-size: 36px;
         line-height: 43px;
+        padding: 0 0 2% 0;
+        margin: 5% 0;
+        border-bottom: medium solid #C4C4C4;
+    }
+    .button-primary {
+        margin: 5% 0;
+        color: #FFFFFF !important;
+        background-color: #8B8DFE !important;
+        border-color: #8B8DFE !important;
+        border-radius: 6px;
+    }
+    .button-primary:hover {
+        background-color:  #FFFFFF !important;
+        border-color:  #FFFFFF !important;
+        color: #8B8DFE !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    }
+    .button-primary-edit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: normal;
+        font-size: 15px;
+        line-height: 22px;
+        padding: 0.3em 0.5em;
+        margin: 1%;
+        background-color:  #FFFFFF !important;
+        border-color:  #8B8DFE !important;
+        color: #8B8DFE !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        border-radius: 6px;
+    }
+    .button-primary-edit:hover {
+        background-color: #8B8DFE !important;
+        border-color: #8B8DFE !important;
+        color: #FFFFFF !important;
+    }
+    .questions {
+        margin: 5% 0;
     }
     .questions-accordion-item {
         border: 1px solid #CECECE;
         box-sizing: border-box;
         border-radius: 3px;
+    }
+
+
+    .question-options {
+        margin: 3% 0;
+    }
+    .question-options-text {
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
     }
 </style>
