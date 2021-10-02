@@ -77,12 +77,17 @@ class QuestionsController extends ApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param Question $question
+     * @param Request $request
      * @return JsonResponse
      */
-    public function update(Question $question): JsonResponse
+    public function update(Request $request): JsonResponse
     {
-        $question->save();
+        $question = Question::query()->find($request->id)->update([
+            'name' => $request->name,
+            'question_pack_id' => $request->question_pack_id,
+            'question_level_id' => $request->question_level_id,
+            'question_type_id' => $request->question_type_id
+        ]);
         return $this->respond($question);
     }
 
