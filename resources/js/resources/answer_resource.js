@@ -8,6 +8,6 @@ class AnswerResource extends Resource {
     }
 }
 
-AnswerResource.url = '/api/question'
+AnswerResource.url = '/api/answers'
 
 export default AnswerResource
