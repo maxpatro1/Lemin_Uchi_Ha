@@ -33,7 +33,9 @@
                         :accordion="'questions-accordion'+index"
                         role="tabpanel"
                     >
-                        <answers-list :question="question">hi</answers-list>
+                        <answers-list :question="question">
+                            <span>hi</span>
+                        </answers-list>
                     </b-collapse>
                 </div>
             </b-list-group>
