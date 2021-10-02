@@ -29,13 +29,13 @@
                     </b-list-group-item>
                     <b-collapse
                         :id="'accordion-questions-'+index"
-                        visible
                         :accordion="'questions-accordion'+index"
                         role="tabpanel"
                     >
-                        <answers-list :question="question">
-                            <span>hi</span>
-                        </answers-list>
+                        <answers-list
+                            @answersUpdate="fetchData"
+                            :question="question"
+                        ></answers-list>
                     </b-collapse>
                 </div>
             </b-list-group>

@@ -6,12 +6,12 @@
                 <b-button
                     v-if="!addingAnswer"
                     class="button-primary ml-auto"
-                    @click="openAnswerInput"
+                    @click="openAddAnswerInput"
                 >
                     <b-icon-plus-circle></b-icon-plus-circle>
                     Добавить ответ
                 </b-button>
-                <div v-if="addingAnswer">
+                <div v-else>
                     <b-form-input
                         v-model="newAnswer.name"
                     ></b-form-input>
@@ -24,27 +24,31 @@
                 </div>
             </b-list-group-item>
             <b-list-group-item v-for="answer in question.answers">
-                {{answer.name}}
-                <b-button>Edit</b-button>
-                <div>
-                    <b-form-input></b-form-input>
-                    <b-button>Ok</b-button>
-                    <b-button>Cancel</b-button>
-                </div>
+                <answer
+                    :answer="answer"
+                    @answersUpdate="$emit('answersUpdate')"
+                ></answer>
             </b-list-group-item>
         </b-list-group>
     </div>
 </template>
 
 <script>
+import Answer from "./Answer";
 import AnswerResource from "../../resources/answer_resource";
 
 export default {
     name: "AnswersList",
+    components: {
+        Answer
+    },
     props: {
         question: {
             type: Object
         }
+    },
+    emits: {
+      answersUpdate: null,
     },
     data() {
         return {
@@ -58,18 +62,16 @@ export default {
         }
     },
     methods: {
-        openAnswerInput() {
-            console.log("Working")
+        openAddAnswerInput() {
             this.addingAnswer = true
         },
         async addAnswer() {
-            console.log("Still working")
             if (this.newAnswer.name) {
                 await AnswerResource.save(this.newAnswer)
+                this.$emit("answersUpdate")
             } else {
                 console.log("newAnswer is empty")
             }
-            console.log("Question: ", this.question)
             this.addingAnswer = false
             this.newAnswer.name = null
         }
