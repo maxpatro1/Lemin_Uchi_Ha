@@ -18,7 +18,8 @@ class Question extends Model
         'name',
         'question_pack_id',
         'question_level_id',
-        'question_type_id'
+        'question_type_id',
+        'time'
     ];
 
     public function level(): BelongsTo

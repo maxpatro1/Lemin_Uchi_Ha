@@ -54,7 +54,8 @@ class QuestionsController extends ApiController
             'name' => $request->name,
             'question_pack_id' => $request->question_pack_id,
             'question_level_id' => $request->question_level_id,
-            'question_type_id' => $request->question_type_id
+            'question_type_id' => $request->question_type_id,
+            'time' => $request->time
         ]);
         return $this->respond($question);
     }
@@ -86,7 +87,8 @@ class QuestionsController extends ApiController
             'name' => $request->name,
             'question_pack_id' => $request->question_pack_id,
             'question_level_id' => $request->question_level_id,
-            'question_type_id' => $request->question_type_id
+            'question_type_id' => $request->question_type_id,
+            'time' => $request->time
         ]);
         return $this->respond($question);
     }
