@@ -105,7 +105,10 @@ import AnswersList from "./AnswersList";
 
 export default {
     name: "QuestionsList",
-    components: {AnswersList, PageTitle},
+    components: {
+        AnswersList,
+        PageTitle,
+    },
     data () {
         return {
             isLoading: false,
