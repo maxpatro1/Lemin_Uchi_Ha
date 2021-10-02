@@ -1,7 +1,13 @@
 <template>
-    <b-container v-if="questionPack">
+    <b-container
+        v-if="questionPack"
+        style="margin: 0; padding: 5%;"
+    >
         <h1 class="page-title">Редактирование раздела</h1>
-        <b-card class="card-shadow col-md-10 ml-auto mr-auto">
+        <b-card
+            class="card-shadow col-md-10 ml-auto mr-auto"
+            style="margin: 0 5%"
+        >
             <b-spinner label="Spinning" v-if="isLoading"></b-spinner>
             <b-row>
                 <b-col>

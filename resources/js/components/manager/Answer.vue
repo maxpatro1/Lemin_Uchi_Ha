@@ -10,28 +10,30 @@
         </b-col>
         <b-col calss="col-1">
             <b-button
-                class="delete-button"
+                class="delete-button icons"
                 @click="deleteAnswer"
             >
                 <b-icon icon="trash-fill"></b-icon>
             </b-button>
         </b-col>
     </b-row>
-    <b-row v-else>
+    <b-row v-else class="update-answer-input">
         <b-col>
             <b-form-input class="answer-text" v-model="answer.name"></b-form-input>
         </b-col>
         <b-col>
             <b-button
-                class="button-primary"
+                class="button-primary icons"
                 @click="editAnswer"
             >
-                <img src="/resources/js/assets/Vector.svg"/>
+                <b-icon icon="check2-square"></b-icon>
             </b-button>
             <b-button
-                class="delete-button"
+                class="delete-button icons"
                 @click="closeEditAnswerInput"
-            >Cancel</b-button>
+            >
+                <b-icon icon="arrow-return-left"></b-icon>
+            </b-button>
         </b-col>
     </b-row>
 </template>
@@ -88,18 +90,26 @@ export default {
         border-color: #8B8DFE !important;
         border-radius: 6px;
     }
-.   button-primary:hover {
+    .button-primary:hover {
         background-color:  #FFFFFF !important;
         border-color:  #FFFFFF !important;
         color: #8B8DFE !important;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
     }
-    .delete-button {
+    .update-answer-input {
+        display: flex;
+        align-items: center;
+        justiy-content: center;
+    }
+    .icons {
         display: flex;
         align-items: center;
         justify-content: center;
+        padding: 0.3em;
+    }
+    .delete-button {
         border: 0;
-        border-radius: 9px;
+        border-radius: 5px;
         background: #FD4A4A !important;
     }
     .answer-text {
