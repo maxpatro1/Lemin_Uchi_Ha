@@ -1,17 +1,20 @@
 <template>
-    <div v-if="questionPack">
-        <page-title>{{questionPack.name}}
-            <span v-if="questionPack.class">{{questionPack.class.dv}}</span>
-        </page-title>
+    <b-container v-if="questionPack">
+        <page-title>Редактирование раздела</page-title>
         <b-card class="card-shadow col-md-10 ml-auto mr-auto">
             <b-spinner label="Spinning" v-if="isLoading"></b-spinner>
             <b-row>
-                <b-col class="col-md-10 d-flex align-items-center">
-                    <h3>Вопросы</h3>
+                <b-col sm="auto" class="align-items-center">
+                    <h3 class="section-title">
+                        {{questionPack.name}}
+                        <span v-if="questionPack.class">{{questionPack.class.dv}}</span>
+                    </h3>
                 </b-col>
-                <b-col class="col-md-2">
+            </b-row>
+            <b-row>
+                <b-col sm="auto" class="d-flex align-items-center">
                     <b-button
-                        class="button-primary ml-auto"
+                        class="button-primary"
                         @click="openQuestionModal('create')"
                     >
                         <b-icon-plus-circle></b-icon-plus-circle>
@@ -20,9 +23,8 @@
                 </b-col>
             </b-row>
             <b-list-group>
-                <div v-for="(question,index) in questions">
+                <div class="questions-accordion-item" v-for="(question,index) in questions">
                     <b-list-group-item
-                        class="questions-accordion-item col-md-8"
                         v-b-toggle="'accordion-questions-' + index"
                         >
                         {{question.name}}
@@ -53,7 +55,7 @@
                 Создать
             </b-button>
         </b-modal>
-    </div>
+    </b-container>
 </template>
 
 <script>
@@ -143,9 +145,12 @@ export default {
         box-shadow: 0 2px 15px rgba(0, 0, 0, 0.25);
         border-radius: 17px;
     }
+    .section-title {
+        font-size: 36px;
+        line-height: 43px;
+    }
     .questions-accordion-item {
-        background: #F7F7F7;
-        border: 1px solid #EEEEEE;
+        border: 1px solid #CECECE;
         box-sizing: border-box;
         border-radius: 3px;
     }

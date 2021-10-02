@@ -12,11 +12,16 @@ export default {
 </script>
 
 <style scoped>
+    @font-face {
+        font-family: "Lato";
+        src: url('/resources/css/fonts/Lato-Black.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
     #App {
-     font-family: Lato,serif;
-     font-style: normal;
-     font-weight: normal;
-     font-size: 72px;
-     line-height: 86px;
+        font-family: "Lato", serif;
+        font-style: normal;
+        font-weight: normal;
     }
 </style>

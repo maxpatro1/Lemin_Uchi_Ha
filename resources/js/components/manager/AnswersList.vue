@@ -1,7 +1,7 @@
 <template>
     <div>
 <!--        <b-spinner label="Spinning" v-if="isLoading"></b-spinner>-->
-        <b-list-group class="col-md-9">
+        <b-list-group>
             <b-list-group-item>
                 <b-button
                     v-if="!addingAnswer"
@@ -23,11 +23,14 @@
                     </b-button>
                 </div>
             </b-list-group-item>
-            <b-list-group-item v-for="answer in question.answers">
-                <answer
-                    :answer="answer"
-                    @answersUpdate="$emit('answersUpdate')"
-                ></answer>
+            <b-list-group-item v-for="(answer, index) in question.answers">
+                <b-row>
+                    <span>{{ index + 1 }}.</span>
+                    <answer
+                        :answer="answer"
+                        @answersUpdate="$emit('answersUpdate')"
+                    ></answer>
+                </b-row>
             </b-list-group-item>
         </b-list-group>
     </div>
@@ -80,5 +83,7 @@ export default {
 </script>
 
 <style scoped>
-
+    span {
+        padding: 0 3%;
+    }
 </style>
