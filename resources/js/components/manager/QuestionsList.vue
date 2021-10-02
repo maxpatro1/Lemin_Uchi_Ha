@@ -26,14 +26,20 @@
                 <div class="questions-accordion-item questions" v-for="(question,index) in questions">
                     <b-list-group-item
                         v-b-toggle="'accordion-questions-' + index"
-                        >
-                        {{question.name}}
-                        <b-button
-                            class="delete-button"
-                            @click="deleteQuestion(question)"
-                        >
-                            <b-icon icon="trash-fill"></b-icon>
-                        </b-button>
+                    >
+                        <b-row>
+                            <b-col>
+                                {{question.name}}
+                            </b-col>
+                            <b-col class="col-3">
+                                <b-button
+                                    class="delete-button"
+                                    @click.stop="deleteQuestion(question)"
+                                >
+                                    <b-icon icon="trash-fill"></b-icon>
+                                </b-button>
+                            </b-col>
+                        </b-row>
                     </b-list-group-item>
                     <b-collapse
                         :id="'accordion-questions-'+index"

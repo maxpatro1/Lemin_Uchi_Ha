@@ -17,9 +17,19 @@
                             v-model="newAnswer.name"
                         ></b-form-input>
                     </b-col>
+                    <b-col v-if="!hasCorrectAnswer">
+                        <b-form-group label="Is True?">
+                            <b-form-radio-group
+                                v-model="newAnswer.is_correct"
+                            >
+                                <b-form-radio value="true">Yes</b-form-radio>
+                                <b-form-radio value="false">No</b-form-radio>
+                            </b-form-radio-group>
+                        </b-form-group>
+                    </b-col>
                     <b-col>
                         <b-button
-                            class="button-primary ml-auto"
+                            class="button-primary"
                             @click="addAnswer"
                         >
                             Save
@@ -81,13 +91,16 @@ export default {
             addingAnswer: false,
             newAnswer: {
                 name: null,
-                question_id: this.question.id
+                question_id: this.question.id,
+                is_correct: false
             },
+            hasCorrectAnswer: false
         }
     },
     methods: {
         openAddAnswerInput() {
-            this.addingAnswer = true
+            this.checkingCorrectAnswer();
+            this.addingAnswer = true;
         },
         async addAnswer() {
             if (this.newAnswer.name) {
@@ -98,6 +111,13 @@ export default {
             }
             this.addingAnswer = false
             this.newAnswer.name = null
+        },
+        checkingCorrectAnswer() {
+            for (let answer of this.question.answers) {
+                if (answer.is_correct) {
+                    this.hasCorrectAnswer = true;
+                }
+            }
         }
     }
 }

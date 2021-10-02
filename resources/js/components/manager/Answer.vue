@@ -26,7 +26,7 @@
                 class="button-primary"
                 @click="editAnswer"
             >
-                <img src="/resources/js/assets/ok.png"/>
+                <img src="/resources/js/assets/Vector.svg"/>
             </b-button>
             <b-button
                 class="delete-button"
