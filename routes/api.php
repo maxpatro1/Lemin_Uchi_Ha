@@ -23,5 +23,6 @@ Route::resource('question', '\App\Http\Controllers\Api\QuestionsController', ['o
 Route::get('questions-list/{id}',['\App\Http\Controllers\Api\QuestionsController','getQuestionsByQuestionPackId']);
 Route::get('dict/types',['\App\Http\Controllers\Api\DictionariesController','getLevelDict']);
 Route::get('dict/levels',['\App\Http\Controllers\Api\DictionariesController','getTypesDict']);
+Route::get('dict/classes',['\App\Http\Controllers\Api\DictionariesController','getClassDict']);
 Route::get('answers-list/{id}',['\App\Http\Controllers\Api\AnswersController','getAnswersByQuestionId']);
 

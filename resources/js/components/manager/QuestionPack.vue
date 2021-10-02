@@ -21,11 +21,15 @@
                 <b-row
                     v-for="questionPack in questionPacks"
                     :key="questionPack.id">
-                        <b-col class="col-md-3">
-                            <router-link :to="`/question_pack/${questionPack.id}/questions`">
+                        <b-col class="col-md-4">
+                            <router-link
+                                class="routerLink"
+                                :to="`/question_pack/${questionPack.id}/questions`">
                                 <h4 class="mr-2">{{questionPack.name}}</h4>
                             </router-link>
-                            <p>5 класс</p>
+                            <p v-if="questionPack.class">
+                                {{questionPack.class.dv}}
+                            </p>
                         </b-col>
                         <b-col class="col-md-4 mt-auto pb-3">
                             <b-row>
@@ -66,6 +70,13 @@
                 class="col-md-10 mt-3 pack-input"
                 placeholder="Предмет"
                 v-model="newQuestionPack.name"></b-form-input>
+            <div>
+                <b-form-select
+                    class="mt-3 col-md-10"
+                    :options="classes"
+                    v-model="newQuestionPack.dict_class_id">
+                </b-form-select>
+            </div>
             <b-button
                 class="button-primary mt-3 ml-auto"
                 variant="outline-primary"
@@ -82,6 +93,7 @@
 <script>
 import QuestionPackResource from "../../resources/question_pack_resource";
 import PageTitle from "../../ui/page-title";
+import DictsResource from "../../resources/dicts_resource";
 
 export default {
     name: "QuestionPack",
@@ -93,13 +105,16 @@ export default {
             newQuestionPack: {
                 name: null,
                 created_by: 3,
+                dict_class_id: null
             },
             modalTitle: null,
-            modalButton: null
+            modalButton: null,
+            classes: null,
         }
     },
     async mounted() {
         await this.fetchData()
+        await this.getClasses()
     },
     methods: {
         async fetchData() {
@@ -107,8 +122,21 @@ export default {
             this.questionPacks = await QuestionPackResource.fetchQuestionPacks()
             this.isLoading = false
         },
+        async getClasses() {
+            const data = await DictsResource.fetchClasses()
+            this.classes = data.map((item) => ({
+                text: item.dv,
+                value: item.id
+            }))
+            this.classes.push({
+                text: 'Класс',
+                value: null
+            })
+            console.log(this.classes)
+        },
         openPackModal(type ,questionPack) {
             if (type === 'update') {
+                this.newQuestionPack = questionPack
             } else {
                 this.newQuestionPack = {
                     name: null,
@@ -183,5 +211,9 @@ export default {
         box-sizing: border-box;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         border-radius: 7px;
+    }
+    .routerLink{
+        text-decoration: none;
+        color: black !important;
     }
 </style>

@@ -10,6 +10,10 @@ class DictsResource extends Resource {
         const { data } = await axios.get(`${this.url}/types`)
         return data
     }
+    static async fetchClasses() {
+        const { data } = await axios.get(`${this.url}/classes`)
+        return data
+    }
 }
 
 DictsResource.url = '/api/dict'

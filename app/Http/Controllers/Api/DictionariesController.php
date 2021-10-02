@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Dictionaries\DictClass;
 use App\Models\Dictionaries\DictQuestionLevels;
 use App\Models\Dictionaries\DictQuestionTypes;
 use App\Models\Question;
@@ -17,5 +18,9 @@ class DictionariesController extends ApiController
     public function getTypesDict(): JsonResponse
     {
         return $this->respond(DictQuestionTypes::query()->get());
+    }
+    public function getClassDict(): JsonResponse
+    {
+        return $this->respond(DictClass::query()->get());
     }
 }

@@ -34,7 +34,7 @@ class QuestionsPackController extends ApiController
     public function index(): JsonResponse
     {
         //TODO VALIDATION
-        return $this->respond($this->model::query()->get());
+        return $this->respond($this->model::query()->with('class')->get());
     }
 
     /**
@@ -50,6 +50,7 @@ class QuestionsPackController extends ApiController
         }
         $questionPack = QuestionPack::query()->create([
             'name' => $request->name,
+            'dict_class_id' => $request->dict_class_id,
             'created_by' => $request->created_by
         ]);
         return $this->respond($questionPack);
@@ -83,6 +84,7 @@ class QuestionsPackController extends ApiController
         }
         $question_pack = QuestionPack::query()->find($request->id)->update([
             'name' => $request->name,
+            'dict_class_id' => $request->dict_class_id,
             'created_by' => $request->created_by
         ]);
         return $this->respond($question_pack);
