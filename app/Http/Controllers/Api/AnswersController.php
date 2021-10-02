@@ -49,6 +49,7 @@ class AnswersController extends ApiController
         $answer = Answer::query()->create([
             'name' => $request->name,
             'question_id' => $request->question_id,
+            'is_correct' => $request->is_correct,
         ]);
         return $this->respond($answer);
     }
@@ -79,6 +80,7 @@ class AnswersController extends ApiController
         $answer = Answer::query()->find($request->id)->update([
             'name' => $request->name,
             'question_id' => $request->question_id,
+            'is_correct' => $request->is_correct,
         ]);
         return $this->respond($answer);
     }
