@@ -14,7 +14,7 @@ class AddTimeToQuestionsTable extends Migration
     public function up()
     {
         Schema::table('questions', function (Blueprint $table) {
-            $table->string('time');
+            $table->string('time')->nullable();
         });
     }
 

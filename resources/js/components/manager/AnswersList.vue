@@ -2,7 +2,7 @@
     <div>
 <!--        <b-spinner label="Spinning" v-if="isLoading"></b-spinner>-->
         <b-list-group>
-            <b-list-group-item>
+            <b-list-group-item class="answers">
                 <b-button
                     v-if="!addingAnswer"
                     class="button-primary ml-auto"
@@ -11,25 +11,46 @@
                     <b-icon-plus-circle></b-icon-plus-circle>
                     Добавить ответ
                 </b-button>
-                <div v-else>
-                    <b-form-input
-                        v-model="newAnswer.name"
-                    ></b-form-input>
-                    <b-button
-                        class="button-primary ml-auto"
-                        @click="addAnswer"
-                    >
-                        Save
-                    </b-button>
-                </div>
+                <b-row v-else>
+                    <b-col>
+                        <b-form-input
+                            v-model="newAnswer.name"
+                        ></b-form-input>
+                    </b-col>
+                    <b-col>
+                        <b-button
+                            class="button-primary ml-auto"
+                            @click="addAnswer"
+                        >
+                            Save
+                        </b-button>
+                    </b-col>
+                </b-row>
             </b-list-group-item>
-            <b-list-group-item v-for="(answer, index) in question.answers">
-                <b-row>
-                    <span>{{ index + 1 }}.</span>
-                    <answer
-                        :answer="answer"
-                        @answersUpdate="$emit('answersUpdate')"
-                    ></answer>
+            <b-list-group-item class="answers">
+                Ответы:
+            </b-list-group-item>
+            <b-list-group-item class="answers" v-for="(answer, index) in question.answers">
+                <b-row class="align-items-center justify-content-center">
+                    <b-col class="col-1 index">
+                        {{ index + 1 }}.
+                    </b-col>
+                    <b-col>
+                        <answer
+                            :answer="answer"
+                            @answersUpdate="$emit('answersUpdate')"
+                        ></answer>
+                    </b-col>
+                </b-row>
+            </b-list-group-item>
+            <b-list-group-item class="answers">
+                <b-row class="index">
+                    <b-col>
+                        Время на ответ (сек): {{question.time}}
+                    </b-col>
+                    <b-col>
+                        Вес вопроса: {{question.question_level_id * 10}}
+                    </b-col>
                 </b-row>
             </b-list-group-item>
         </b-list-group>
@@ -83,7 +104,26 @@ export default {
 </script>
 
 <style scoped>
-    span {
-        padding: 0 3%;
+    .answers {
+        border: 0 !important;
+    }
+    .button-primary {
+        margin: 5% 0;
+        color: #FFFFFF !important;
+        background-color: #8B8DFE !important;
+        border-color: #8B8DFE !important;
+        border-radius: 6px;
+    }
+    .button-primary:hover {
+        background-color:  #FFFFFF !important;
+        border-color:  #FFFFFF !important;
+        color: #8B8DFE !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    }
+    .index {
+        padding: 0 1%;
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 17px;
     }
 </style>
