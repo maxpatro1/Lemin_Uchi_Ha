@@ -39,12 +39,23 @@ class QuestionsController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param Question $question
+     * @param Request $request
      * @return JsonResponse
      */
-    public function store(Question $question): JsonResponse
+    public function store(Request $request): JsonResponse
     {
-        $question->save();
+//        if (!$request->question_pack_id
+//            || !$request->question_level_id
+//            || !$request->name
+//            || !$request->question_type_id) {
+//            return $this->respondNotFound();
+//        }
+        $question = Question::query()->create([
+            'name' => $request->name,
+            'question_pack_id' => $request->question_pack_id,
+            'question_level_id' => $request->question_level_id,
+            'question_type_id' => $request->question_type_id
+        ]);
         return $this->respond($question);
     }
 
@@ -89,7 +100,7 @@ class QuestionsController extends ApiController
 
     public function getQuestionsByQuestionPackId(int $question_pack_id): JsonResponse
     {
-        $questions = Question::query()->where($question_pack_id)->get();
+        $questions = Question::query()->with('answers')->where('question_pack_id', $question_pack_id)->get();
         if (!$questions) {
             $this->respondNotFound();
         }

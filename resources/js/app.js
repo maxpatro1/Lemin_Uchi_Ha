@@ -5,20 +5,21 @@
  */
 
 import Vue from "vue";
-import { BootstrapVue } from 'bootstrap-vue'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 // import VueRouter from 'vue-router'
 
 // Vue.use(VueRouter)
 Vue.use(BootstrapVue)
+Vue.use(IconsPlugin);
 require('./bootstrap');
 
 window.Vue = require('vue').default;
 
-// import router from './router';
+import router from './router';
 import App from './App.vue';
 
 const app = new Vue({
-    // router,
+    router,
     el: '#app',
     render: h => h(App)
 });

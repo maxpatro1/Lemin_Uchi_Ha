@@ -91,10 +91,7 @@ class AnswersController extends ApiController
 
     public function getAnswersByQuestionId(int $question_id): JsonResponse
     {
-        $answers = Answer::query()->where($question_id)->get();
-        if (!$answers) {
-            $this->respondNotFound();
-        }
+        $answers = Answer::query()->where('question_id',$question_id)->get();
         return $this->respond($answers);
     }
 }

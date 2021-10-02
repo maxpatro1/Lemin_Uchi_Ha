@@ -19,3 +19,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('question-pack', '\App\Http\Controllers\Api\QuestionsPackController', ['only' => ['index', 'show', 'update', 'store', 'destroy']]);
+Route::resource('question', '\App\Http\Controllers\Api\QuestionsController', ['only' => ['index', 'show', 'update', 'store', 'destroy']]);
+Route::get('questions-list/{id}',['\App\Http\Controllers\Api\QuestionsController','getQuestionsByQuestionPackId']);
+Route::get('dict/types',['\App\Http\Controllers\Api\DictionariesController','getLevelDict']);
+Route::get('dict/levels',['\App\Http\Controllers\Api\DictionariesController','getTypesDict']);
+Route::get('answers-list/{id}',['\App\Http\Controllers\Api\AnswersController','getAnswersByQuestionId']);
+

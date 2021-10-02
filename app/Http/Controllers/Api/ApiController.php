@@ -21,6 +21,7 @@ class ApiController extends Controller
     public function respondNotFound($message = 'Not Found!'): \Illuminate\Http\JsonResponse
     {
         return response()->json([
+            'status' => '404',
             'message' => $message,
         ]);
     }

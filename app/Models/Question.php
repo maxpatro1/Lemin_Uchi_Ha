@@ -35,5 +35,9 @@ class Question extends Model
     {
         return $this->hasMany(QuestionPack::class,'question_pack_id','id');
     }
+    public function answers(): HasMany
+    {
+        return $this->hasMany(Answer::class,'question_id','id');
+    }
 
 }

@@ -73,13 +73,19 @@ class QuestionsPackController extends ApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param QuestionPack $questionPack
+     * @param Request $request
      * @return JsonResponse
      */
-    public function update(QuestionPack $questionPack): JsonResponse
+    public function update(Request $request): JsonResponse
     {
-        $questionPack->save();
-        return $this->respond($questionPack);
+        if (!$request->id) {
+            return $this->respondNotFound();
+        }
+        $question_pack = QuestionPack::query()->find($request->id)->update([
+            'name' => $request->name,
+            'created_by' => $request->created_by
+        ]);
+        return $this->respond($question_pack);
     }
 
     /**

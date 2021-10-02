@@ -1,61 +1,91 @@
 <template>
     <div>
-        <b-spinner label="Spinning" v-if="isLoading"></b-spinner>
-        <b-button
-            variant="outline-primary"
-            @click="openCreationPackModal"
-        >
-            Создать пак вопросов
-        </b-button>
-        <b-list-group>
-            <b-list-group-item v-for="questionPack in questionPacks">
-                <div>
-                    <span>{{questionPack.name}}</span>
-                </div>
-                <b-button
-                    variant="outline-primary"
-                    @click="openUpdatingPackModal(questionPack)"
-                >Update</b-button>
-                <b-button
-                    variant="danger"
-                    @click="deleteQuestionPack(questionPack)"
-                >Delete</b-button>
-            </b-list-group-item>
-        </b-list-group>
+        <page-title>Пакеты вопросов</page-title>
+        <b-card class="card-shadow col-md-7 ml-auto mr-auto">
+            <b-spinner label="Spinning" v-if="isLoading"></b-spinner>
+            <b-row>
+                <b-col class="col-md-10 d-flex align-items-center">
+                    <h3>Предметы</h3>
+                </b-col>
+                <b-col class="col-md-2">
+                    <b-button
+                        class="button-primary ml-auto"
+                        @click="openPackModal('create')"
+                    >
+                        <b-icon-plus-circle></b-icon-plus-circle>
+                        Создать
+                    </b-button>
+                </b-col>
+            </b-row>
+            <b-list-group>
+                <b-row
+                    v-for="questionPack in questionPacks"
+                    :key="questionPack.id">
+                        <b-col class="col-md-3">
+                            <router-link :to="`/question_pack/${questionPack.id}/questions`">
+                                <h4 class="mr-2">{{questionPack.name}}</h4>
+                            </router-link>
+                            <p>5 класс</p>
+                        </b-col>
+                        <b-col class="col-md-4 mt-auto pb-3">
+                            <b-row>
+                                <b-col class="p-0">
+                                    <b-button
+                                        class="d-flex align-items-center pr-3 button-primary-edit"
+                                        variant="outline-primary"
+                                        @click="openPackModal('update', questionPack)">
+                                            <b-icon class="mr-1" icon="pencil-square"></b-icon>
+                                            Редактировать
+                                    </b-button>
+                                </b-col>
+                                <b-col class="p-0">
+                                    <b-button
+                                        class="delete-button"
+                                        variant="danger"
+                                        @click="deleteQuestionPack(questionPack)"
+                                    >
+                                        <b-icon class="mb-1" icon="trash"></b-icon>
+                                    </b-button>
+                                </b-col>
+                            </b-row>
+                        </b-col>
+                </b-row>
+            </b-list-group>
+        </b-card>
         <b-modal
+            centered
+            hide-backdrop
+            content-class="shadow"
+            hide-header
             hide-footer
+            size="lg"
             id="new-question-pack-modal"
-            title="Введите название для пакета вопросов"
         >
-            <b-form-input v-model="newQuestionPack.name"></b-form-input>
+            <page-title>{{modalTitle}}</page-title>
+            <b-form-input
+                class="col-md-10 mt-3 pack-input"
+                placeholder="Предмет"
+                v-model="newQuestionPack.name"></b-form-input>
             <b-button
-                class="mt-3" variant="outline-primary"
+                class="button-primary mt-3 ml-auto"
+                variant="outline-primary"
                 @click="createQuestionPack"
             >
-                Создать
-            </b-button>
-        </b-modal>
-        <b-modal
-            hide-footer
-            id="current-question-pack-modal"
-            title="Название для пакета вопросов"
-        >
-            <b-form-input v-model="currentQuestionPack.name"></b-form-input>
-            <b-button
-                class="mt-3" variant="outline-primary"
-                @click="updateQuestionPack"
-            >
-                Обновить
+                <b-icon-plus-circle></b-icon-plus-circle>
+                {{modalButton}}
             </b-button>
         </b-modal>
     </div>
+
 </template>
 
 <script>
 import QuestionPackResource from "../../resources/question_pack_resource";
+import PageTitle from "../../ui/page-title";
 
 export default {
     name: "QuestionPack",
+    components: {PageTitle},
     data () {
         return {
             questionPacks: null,
@@ -64,10 +94,8 @@ export default {
                 name: null,
                 created_by: 3,
             },
-            currentQuestionPack: {
-                name: null,
-                created_by: 3,
-            }
+            modalTitle: null,
+            modalButton: null
         }
     },
     async mounted() {
@@ -79,12 +107,17 @@ export default {
             this.questionPacks = await QuestionPackResource.fetchQuestionPacks()
             this.isLoading = false
         },
-        openCreationPackModal() {
+        openPackModal(type ,questionPack) {
+            if (type === 'update') {
+            } else {
+                this.newQuestionPack = {
+                    name: null,
+                    created_by: 3,
+                }
+            }
+            this.modalTitle = this.getModalTitle(type)
+            this.modalButton = this.getModalButton(type)
             this.$bvModal.show('new-question-pack-modal')
-        },
-        openUpdatingPackModal(questionPack) {
-            this.currentQuestionPack.name = questionPack.name
-            this.$bvModal.show('current-question-pack-modal')
         },
         async createQuestionPack() {
             await QuestionPackResource.save(this.newQuestionPack)
@@ -95,24 +128,60 @@ export default {
             this.$bvModal.hide('new-question-pack-modal')
             await this.fetchData()
         },
-        async updateQuestionPack() {
-            await QuestionPackResource.save(this.currentQuestionPack)
-            this.newQuestionPack = {
-                name: null,
-                created_by: 3,
-            }
-            this.$bvModal.hide('current-question-pack-modal')
-            await this.fetchData()
-        },
         async deleteQuestionPack(questionPack) {
             await QuestionPackResource.delete(questionPack)
             console.log("Pack has been deleted")
             await this.fetchData()
         },
-    }
+        getModalTitle(type) {
+            return type === 'update' ? 'Изменение пакета' : 'Создание пакета';
+        },
+        getModalButton(type) {
+            return type === 'update' ? 'Изменить' : 'Создать';
+        }
+    },
 }
 </script>
 
 <style scoped>
-
+    .card-shadow {
+        background: #FFFFFF;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.25);
+        border-radius: 17px;
+    }
+    .button-primary {
+        color: #FFFFFF !important;
+        background-color: #8B8DFE !important;
+        border-color: #8B8DFE !important;
+        border-radius: 6px;
+    }
+    .button-primary:hover {
+        background-color:  #FFFFFF !important;
+        border-color:  #FFFFFF !important;
+        color: #8B8DFE !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    }
+    .button-primary-edit {
+        background-color:  #FFFFFF !important;
+        border-color:  #FFFFFF !important;
+        color: #8B8DFE !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        border-radius: 6px;
+    }
+    .button-primary-edit:hover {
+        background-color: #8B8DFE !important;
+        border-color: #8B8DFE !important;
+        color: #FFFFFF !important;
+    }
+    .delete-button {
+        border-radius: 9px;
+        background: #FD4A4A !important;
+    }
+    .pack-input {
+        background: #FFFFFF;
+        border: 1px solid #EEEEEE;
+        box-sizing: border-box;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 7px;
+    }
 </style>
