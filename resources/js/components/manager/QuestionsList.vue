@@ -1,12 +1,24 @@
 <template>
     <div v-if="questionPack">
-        <page-title>{{questionPack.name}}</page-title>
+        <page-title>{{questionPack.name}}
+            <span v-if="questionPack.class">{{questionPack.class.dv}}</span>
+        </page-title>
         <b-card class="card-shadow col-md-10 ml-auto mr-auto">
             <b-spinner label="Spinning" v-if="isLoading"></b-spinner>
-<!--            <b-button-->
-<!--                variant="outline-primary"-->
-<!--                @click="openQuestionModal('create')"-->
-<!--            >Добавить вопрос</b-button>-->
+            <b-row>
+                <b-col class="col-md-10 d-flex align-items-center">
+                    <h3>Вопросы</h3>
+                </b-col>
+                <b-col class="col-md-2">
+                    <b-button
+                        class="button-primary ml-auto"
+                        @click="openQuestionModal('create')"
+                    >
+                        <b-icon-plus-circle></b-icon-plus-circle>
+                        Добавить вопрос
+                    </b-button>
+                </b-col>
+            </b-row>
             <b-list-group>
                 <div v-for="(question,index) in questions">
                     <b-list-group-item

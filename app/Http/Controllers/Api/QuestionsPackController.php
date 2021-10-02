@@ -64,7 +64,7 @@ class QuestionsPackController extends ApiController
      */
     public function show(int $id): JsonResponse
     {
-        $question_pack = QuestionPack::query()->find($id);
+        $question_pack = QuestionPack::query()->with('class')->find($id);
         if (!$question_pack) {
             return $this->respondNotFound();
         }
