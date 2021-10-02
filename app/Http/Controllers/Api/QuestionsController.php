@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Answer;
 use App\Models\Question;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -101,6 +102,7 @@ class QuestionsController extends ApiController
      */
     public function destroy(Question $question): JsonResponse
     {
+        Answer::query()->where('question_id',$question->id)->delete();
         $question->delete();
         return $this->respond($question);
     }
@@ -112,5 +114,13 @@ class QuestionsController extends ApiController
             $this->respondNotFound();
         }
         return $this->respond($questions);
+    }
+    public function getStudentQuestionsByQuestionPackId(int $question_pack_id): JsonResponse
+    {
+        $question = Question::query()->with('answers')->where('question_pack_id', $question_pack_id)->get()->random(1);
+        if (!$question) {
+            $this->respondNotFound();
+        }
+        return $this->respond($question);
     }
 }

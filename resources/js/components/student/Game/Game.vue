@@ -1,12 +1,14 @@
 <template>
-    <div v-if="battle !== null">
+    <div v-if="battle">
         <b-row>
             <b-col class="first-team-header text-style d-flex align-items-center"><b>{{battle.team.name}}</b></b-col>
             <b-col class="second-team-header text-style d-flex align-items-center"><b>{{battle.second_team.name}}</b></b-col>
         </b-row>
         <b-row class="d-flex text-style justify-content-center">Статус</b-row>
         <b-row class="d-flex text-style justify-content-center">Отвечает: {{battle.second_team.name}}</b-row>
-        <game-field :battle-fields="battleFields"></game-field>
+        <game-field
+            :battle="battle"
+            :battle-fields="battleFields"></game-field>
     </div>
 </template>
 

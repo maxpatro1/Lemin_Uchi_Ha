@@ -6,6 +6,10 @@ class QuestionResource extends Resource {
         const { data } = await axios.get(`/api/questions-list/${id}`)
         return data
     }
+    static async fetchStudentQuestionByPackId(id) {
+        const { data } = await axios.get(`/api/student-question/${id}`)
+        return data
+    }
 }
 
 QuestionResource.url = '/api/question'
