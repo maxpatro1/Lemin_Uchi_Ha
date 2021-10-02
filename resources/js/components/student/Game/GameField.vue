@@ -3,6 +3,7 @@
         <b-card @click="openQuestionModal()" v-for="field in battleFields">
             {{field.id}}
         </b-card>
+        <b-modal></b-modal>
     </div>
 </template>
 
@@ -12,16 +13,16 @@ export default {
     name: "GameField",
     props: {
         battleFields: {
-            type: Object
-        }
+            type: Array
+        },
+        battle: {
+
+        },
     },
     data() {
       return {
           fieldsData: null
       }
-    },
-    mounted() {
-        console.log(this.battleFields)
     },
     methods: {
         openQuestionModal() {
