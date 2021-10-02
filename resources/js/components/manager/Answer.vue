@@ -25,7 +25,9 @@
             <b-button
                 class="button-primary"
                 @click="editAnswer"
-            >Ok</b-button>
+            >
+                <img src="/resources/js/assets/ok.png"/>
+            </b-button>
             <b-button
                 class="delete-button"
                 @click="closeEditAnswerInput"

@@ -28,7 +28,7 @@
                 </b-row>
             </b-list-group-item>
             <b-list-group-item class="answers">
-                Answers
+                Ответы:
             </b-list-group-item>
             <b-list-group-item class="answers" v-for="(answer, index) in question.answers">
                 <b-row class="align-items-center justify-content-center">
@@ -40,6 +40,16 @@
                             :answer="answer"
                             @answersUpdate="$emit('answersUpdate')"
                         ></answer>
+                    </b-col>
+                </b-row>
+            </b-list-group-item>
+            <b-list-group-item class="answers">
+                <b-row class="index">
+                    <b-col>
+                        Время на ответ (сек): {{question.time}}
+                    </b-col>
+                    <b-col>
+                        Вес вопроса: {{question.question_level_id * 10}}
                     </b-col>
                 </b-row>
             </b-list-group-item>

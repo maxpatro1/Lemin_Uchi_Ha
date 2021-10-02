@@ -28,6 +28,12 @@
                         v-b-toggle="'accordion-questions-' + index"
                         >
                         {{question.name}}
+                        <b-button
+                            class="delete-button"
+                            @click="deleteQuestion(question)"
+                        >
+                            <b-icon icon="trash-fill"></b-icon>
+                        </b-button>
                     </b-list-group-item>
                     <b-collapse
                         :id="'accordion-questions-'+index"
@@ -58,18 +64,19 @@
                 <b-col>
                     <b-row class="question-options">Вес вопроса</b-row>
                     <b-row class="question-options">
-                        <b-form-checkbox
-                            button
-                            class="button-primary-edit"
-                        >10</b-form-checkbox>
-                        <b-form-checkbox
-                            button
-                            class="button-primary-edit"
-                        >20</b-form-checkbox>
-                        <b-form-checkbox
-                            button
-                            class="button-primary-edit"
-                        >30</b-form-checkbox>
+                        <b-form-radio-group
+                            v-model="newQuestionList.question_level_id"
+                        >
+                            <b-form-radio
+                                value="1"
+                            >10</b-form-radio>
+                            <b-form-radio
+                                value="2"
+                            >20</b-form-radio>
+                            <b-form-radio
+                                value="3"
+                            >30</b-form-radio>
+                        </b-form-radio-group>
                     </b-row>
                 </b-col>
             </b-row>
@@ -140,7 +147,13 @@ export default {
             this.$bvModal.show('question')
         },
         async createQuestion() {
-            if (this.newQuestionList.time !== Number) return
+            if (this.level1) {
+                this.newQuestionList.question_level_id = 1;
+            } else if (this.level2) {
+                this.newQuestionList.question_level_id = 2;
+            } else if (this.level3) {
+                this.newQuestionList.question_level_id = 3;
+            }
             this.newQuestionList.question_pack_id = this.getPackId
             await QuestionResource.save(this.newQuestionList)
             this.newQuestionList = {
@@ -200,25 +213,13 @@ export default {
         color: #8B8DFE !important;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
     }
-    .button-primary-edit {
+    .delete-button {
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: normal;
-        font-size: 15px;
-        line-height: 22px;
-        padding: 0.3em 0.5em;
-        margin: 1%;
-        background-color:  #FFFFFF !important;
-        border-color:  #8B8DFE !important;
-        color: #8B8DFE !important;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-        border-radius: 6px;
-    }
-    .button-primary-edit:hover {
-        background-color: #8B8DFE !important;
-        border-color: #8B8DFE !important;
-        color: #FFFFFF !important;
+        border: 0;
+        border-radius: 9px;
+        background: #FD4A4A !important;
     }
     .questions {
         margin: 5% 0;
@@ -228,8 +229,6 @@ export default {
         box-sizing: border-box;
         border-radius: 3px;
     }
-
-
     .question-options {
         margin: 3% 0;
     }
