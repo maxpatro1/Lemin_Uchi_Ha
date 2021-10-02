@@ -26,4 +26,7 @@ Route::get('dict/types',['\App\Http\Controllers\Api\DictionariesController','get
 Route::get('dict/levels',['\App\Http\Controllers\Api\DictionariesController','getTypesDict']);
 Route::get('dict/classes',['\App\Http\Controllers\Api\DictionariesController','getClassDict']);
 Route::get('answers-list/{id}',['\App\Http\Controllers\Api\AnswersController','getAnswersByQuestionId']);
+Route::resource('battle', '\App\Http\Controllers\Api\BattleController', ['only' => ['index', 'show', 'update', 'store', 'destroy']]);
+Route::resource('battle-fields', '\App\Http\Controllers\Api\BattleFieldsController', ['only' => ['index', 'show', 'update', 'store', 'destroy']]);
+
 
