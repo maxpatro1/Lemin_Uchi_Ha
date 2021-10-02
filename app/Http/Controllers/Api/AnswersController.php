@@ -44,9 +44,12 @@ class AnswersController extends ApiController
      * @param Answer $answer
      * @return JsonResponse
      */
-    public function store(Answer $answer): JsonResponse
+    public function store(Request $request): JsonResponse
     {
-        $answer->save();
+        $answer = Answer::query()->create([
+            'name' => $request->name,
+            'question_id' => $request->question_id,
+        ]);
         return $this->respond($answer);
     }
 
@@ -68,12 +71,15 @@ class AnswersController extends ApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param Answer $answer
+     * @param Request $request
      * @return JsonResponse
      */
-    public function update(Answer $answer): JsonResponse
+    public function update(Request $request): JsonResponse
     {
-        $answer->save();
+        $answer = Answer::query()->find($request->id)->update([
+            'name' => $request->name,
+            'question_id' => $request->question_id,
+        ]);
         return $this->respond($answer);
     }
 
