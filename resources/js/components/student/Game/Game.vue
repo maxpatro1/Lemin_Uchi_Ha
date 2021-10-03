@@ -5,7 +5,10 @@
             <b-col class="second-team-header text-style d-flex align-items-center"><b>{{battle.second_team.name}}</b></b-col>
         </b-row>
         <b-row class="d-flex text-style justify-content-center">Статус</b-row>
-        <b-row class="d-flex text-style justify-content-center">Отвечает: {{battle.second_team.name}}</b-row>
+        <b-row class="d-flex text-style justify-content-center">Отвечает:
+            <span v-if="battle.whos_round === battle.second_team.id">{{battle.second_team.name}}</span>
+            <span v-if="battle.whos_round === battle.team.id">{{battle.team.name}}</span>
+        </b-row>
         <game-field
             :battle="battle"
             :battle-fields="battleFields"></game-field>
