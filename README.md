@@ -14,8 +14,7 @@
 
 НЕОБХОДИМЫЕ УСЛОВИЯ ДЛЯ РАБОТЫ ПРИЛОЖЕНИЯ
 1.	развертывание сервиса производится на ubuntu 20.04;
-2.	требуется установленный docker;
-3.	
+2.	требуется установленный docker;	
 УСТАНОВКА, НАСТРОЙКА
 git clone https://github.com/maxpatro1/Lemon_Uchi_Hack.git
 cd Lemon_Uchi_Hack
