@@ -1,45 +1,47 @@
 <template>
-    <div>
-        <page-title>Пакеты вопросов</page-title>
-        <b-card class="card-shadow col-md-7 ml-auto mr-auto">
+    <div class="base">
+        <h1 class="text-center mb-4 mt-3">Предметы</h1>
+        <b-card
+            class="card-shadow col-11 ml-auto mr-auto pl-0 mb-3"
+            v-for="questionPack in questionPacks"
+            :key="questionPack.id"
+        >
             <b-spinner label="Spinning" v-if="isLoading"></b-spinner>
-            <b-row>
-                <b-col class="col-md-10 d-flex align-items-center">
-                    <h3>Предметы</h3>
-                </b-col>
-                <b-col class="col-md-2">
-                    <b-button
-                        class="button-primary ml-auto"
-                        @click="openPackModal('create')"
-                    >
-                        <b-icon-plus-circle></b-icon-plus-circle>
-                        Создать
-                    </b-button>
-                </b-col>
-            </b-row>
+<!--            <b-row>-->
+<!--                <b-col class="col-md-10 d-flex align-items-center">-->
+<!--                    <h3>Предметы</h3>-->
+<!--                </b-col>-->
+<!--                <b-col class="col-md-2">-->
+<!--                    <b-button-->
+<!--                        class="button-primary ml-auto"-->
+<!--                        @click="openPackModal('create')"-->
+<!--                    >-->
+<!--                        <b-icon-plus-circle></b-icon-plus-circle>-->
+<!--                        Создать-->
+<!--                    </b-button>-->
+<!--                </b-col>-->
+<!--            </b-row>-->
             <b-list-group>
-                <b-row
-                    v-for="questionPack in questionPacks"
-                    :key="questionPack.id">
-                        <b-col class="col-md-4">
+                <b-row>
+                        <b-col class="size">
                             <router-link
                                 class="routerLink"
                                 :to="`/question_pack/${questionPack.id}/questions`">
-                                <h4 class="mr-2">{{questionPack.name}}</h4>
+                                <h4 class="object">{{questionPack.name}}</h4>
                             </router-link>
-                            <p v-if="questionPack.class">
+                            <p class="grade" v-if="questionPack.class">
                                 {{questionPack.class.dv}}
                             </p>
                         </b-col>
-                        <b-col class="col-md-4 mt-auto pb-3">
-                            <b-row>
+                        <b-col class="col-md-4 mt-auto pb-3 d-flex justify-content-end">
+                            <b-row class="d-flex flex-column">
                                 <b-col class="p-0">
                                     <b-button
-                                        class="d-flex align-items-center pr-3 button-primary-edit"
+                                        class="d-flex align-items-center button-primary-edit ml-0 mb-2"
                                         variant="outline-primary"
                                         @click="openPackModal('update', questionPack)">
-                                            <b-icon class="mr-1" icon="pencil-square"></b-icon>
-                                            Редактировать
+                                            <b-icon class="mr-0 p-0" icon="pencil-square"></b-icon>
+                                            Изменить
                                     </b-button>
                                 </b-col>
                                 <b-col class="p-0">
@@ -48,7 +50,8 @@
                                         variant="danger"
                                         @click="deleteQuestionPack(questionPack)"
                                     >
-                                        <b-icon class="mb-1" icon="trash"></b-icon>
+                                        <b-icon class="mr-1" icon="trash"></b-icon>
+                                        Удалить
                                     </b-button>
                                 </b-col>
                             </b-row>
@@ -56,6 +59,15 @@
                 </b-row>
             </b-list-group>
         </b-card>
+        <b-col class="staticButton">
+            <b-button
+                class="text-center button-primary"
+                @click="openPackModal('create')"
+            >
+                <b-icon-plus-circle></b-icon-plus-circle>
+                Создать
+            </b-button>
+        </b-col>
         <b-modal
             centered
             hide-backdrop
@@ -72,7 +84,8 @@
                 v-model="newQuestionPack.name"></b-form-input>
             <div>
                 <b-form-select
-                    class="mt-3 col-md-10"
+                    class="mt-3 col-3"
+                    style="font-size: 12px; line-height: 16px"
                     :options="classes"
                     v-model="newQuestionPack.dict_class_id">
                 </b-form-select>
@@ -124,6 +137,7 @@ export default {
         },
         async getClasses() {
             const data = await DictsResource.fetchClasses()
+            console.log(data);
             this.classes = data.map((item) => ({
                 text: item.dv,
                 value: item.id
@@ -215,5 +229,34 @@ export default {
     .routerLink{
         text-decoration: none;
         color: black !important;
+    }
+    .object {
+        /*font-family: "Lato";*/
+        /*font-style: normal;*/
+        /*font-weight: normal;*/
+        font-size: 36px;
+        line-height: 43px;
+        color: #3A3A3A;
+    }
+    .grade {
+        /*font-family: "Lato";*/
+        /*font-style: normal;*/
+        /*font-weight: normal;*/
+        font-size: 18px;
+        line-height: 22px;
+        color: #585858;
+    }
+    .size {
+        /*width: auto;*/
+    }
+    .staticButton {
+        position: fixed;
+        top: 35em;
+        display: flex;
+        justify-content: center;
+    }
+    .base {
+        /*background: url("./resources/js/assets/background.png");*/
+        background-color: white;
     }
 </style>

@@ -3,15 +3,20 @@
         <b-button @click.prevent="initGame">
             Создать игру
         </b-button>
+        <welcome></welcome>
     </div>
 </template>
 
 <script>
 import GameResource from "../../resources/game_resource";
 import GameFieldResource from "../../resources/game_field_resource";
+import Welcome from "../Welcome";
 
 export default {
     name: "menu",
+    components: {
+        Welcome
+    },
     data () {
       return {
           battle: null
