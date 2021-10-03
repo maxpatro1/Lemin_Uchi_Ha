@@ -10,7 +10,8 @@
 •	PHP Laravel
 •	Postgres
 
-Скринкаст доступен по адресу: 
+Скринкаст доступен по адресу: https://disk.yandex.ru/d/VNdfF9N7vWqDmg
+Ссылка на презентацию: https://disk.yandex.ru/d/VNdfF9N7vWqDmg
 
 НЕОБХОДИМЫЕ УСЛОВИЯ ДЛЯ РАБОТЫ ПРИЛОЖЕНИЯ
 1.	развертывание сервиса производится на ubuntu 20.04;
