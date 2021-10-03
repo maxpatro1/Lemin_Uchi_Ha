@@ -95,10 +95,8 @@ class BattleFieldsController extends ApiController
     public function update(Request $request): JsonResponse
     {
         $battleField = BattleField::query()->find($request->id)->update([
-            'name' => $request->name,
-            'question_pack_id' => $request->question_pack_id,
-            'question_level_id' => $request->question_level_id,
-            'question_type_id' => $request->question_type_id
+//            'battle_id' => $request->battle_id,
+            'whos_field_id' => $request->whos_field_id
         ]);
         return $this->respond($battleField);
     }

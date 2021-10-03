@@ -18,7 +18,8 @@ class Battle extends Model
         'pack_id',
         'team_id',
         'second_team_id',
-        'is_playing'
+        'is_playing',
+        'whos_round'
     ];
 
     public function pack(): BelongsTo
