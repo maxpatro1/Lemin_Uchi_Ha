@@ -75,9 +75,11 @@ class BattleController extends ApiController
     public function update(Request $request): JsonResponse
     {
         $battle = Battle::query()->find($request->id)->update([
-            'whos_round' => $request->whos_round
+            'whos_round' => $request->whos_round,
+            'first_team_balls' => $request->first_team_balls,
+            'second_team_balls' => $request->second_team_balls,
         ]);
-        return $this->respond($battle);
+        return $this->respond($request);
     }
 
     /**

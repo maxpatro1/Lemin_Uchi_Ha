@@ -66,7 +66,7 @@ class BattleFieldsController extends ApiController
             }
         }
         $battleField = BattleField::query()
-            ->where('battle_id',$request->battle_id)->get();
+            ->where('battle_id',$request->battle_id)->orderBy('id')->get();
         return $this->respond($battleField);
 
     }
@@ -115,7 +115,7 @@ class BattleFieldsController extends ApiController
 
     public function getBattleFieldsByBattleId(int $id): JsonResponse
     {
-        $battleField = BattleField::query()->where('battle_id',$id)->get();
+        $battleField = BattleField::query()->where('battle_id',$id)->orderBy('id')->get();
         return $this->respond($battleField);
     }
 

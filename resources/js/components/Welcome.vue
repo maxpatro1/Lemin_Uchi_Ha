@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-card class="card-shadow col-11 ml-auto mr-auto pl-0 mb-3 mt-5">
+        <b-card class="card-shadow col-12 ml-auto mr-auto pl-0 mb-3 mt-5">
             <b-list-group>
                 <h1 class="header">Добро пожаловать</h1>
                 <div class="d-flex align-items-center flex-column">
@@ -30,7 +30,7 @@
                         <b-col>
                             <b-row>
                                 <b-col class="p-0">
-                                    <button type="button" class="btn btn-primary btn-lg colorSize mb-5 fontButton">
+                                    <button type="button" @click="openCommandModal" class="btn btn-primary colorSize mb-5 fontButton">
                                         Выбрать команду
                                         <b-icon icon="people"></b-icon>
                                     </button>
@@ -91,7 +91,12 @@
 
 <script>
 export default {
-    name: "two"
+    name: "two",
+    methods: {
+        openCommandModal(){
+            this.$bvModal.show('command_modal')
+        }
+    }
 }
 </script>
 

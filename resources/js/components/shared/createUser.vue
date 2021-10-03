@@ -1,16 +1,18 @@
 <template>
     <div>
-        <h1>Выбери своего бойца</h1>
-        <h2>Учитель <b-button @click="createUser">Перейти</b-button></h2>
-        <h2>Ученик <b-button @click="createUser">Перейти</b-button></h2>
+        <fon></fon>
+        <b-button class="first-button" @click="createUser('manager')">Перейти</b-button>
+        <b-button class="second-button" @click="createUser('student')">Перейти</b-button>
     </div>
 </template>
 
 <script>
+import Fon from "./Fon";
 export default {
     name: "createUser",
+    components: {Fon},
     methods: {
-        createUser() {
+        createUser(type) {
             const date = new Date();
             const uniqueCode = date
                 .toString()
@@ -31,12 +33,33 @@ export default {
                 email: "user" + uniqueCode + "@email.com",
                 password: "qwerty" + uniqueCode,
             }
-            console.log(User);
+            if (type === 'manager') {
+                this.$router.push('/manager')
+            } else {
+                this.$router.push('/student')
+            }
         }
     }
 }
 </script>
 
 <style scoped>
-
+    .first-button {
+        position: absolute;
+        top: 730px;
+        left: 50px;
+        background: #FFFFFF;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+        border-radius: 3px;
+        color: black;
+    }
+    .second-button {
+        position: absolute;
+        top: 950px;
+        right: 100px;
+        background: #FFFFFF;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+        border-radius: 3px;
+        color: black;
+    }
 </style>
